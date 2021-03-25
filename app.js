@@ -42,7 +42,7 @@ app.use(function (req, res, next) {
  * Routes
  */
 
-const authRouter = require("./routes/auth");
+const authRouter = require("./routes/auth.routes");
 
 app.use("/api/auth", authRouter);
 
