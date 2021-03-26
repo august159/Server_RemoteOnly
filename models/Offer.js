@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
-const jobofferShema = new Schema(
+const offerSchema = new Schema(
   {
     title: { type: String, required: true },
     salary: { type: Number, required: true },
@@ -43,5 +43,5 @@ const jobofferShema = new Schema(
   { timestamps: true }
 );
 
-const JobOfferModel = mongoose.model("joboffers", jobofferShema);
-module.exports = JobOfferModel;
+const OfferModel = mongoose.model("offers", offerSchema);
+module.exports = OfferModel;

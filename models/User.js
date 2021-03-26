@@ -28,10 +28,11 @@ const userSchema = new Schema({
   gitHub: String,
   otherWebsite: String,
   additionalInfo: String,
-  joboffers: [
+  resume: String,
+  offers: [
     {
       type: Schema.Types.ObjectId,
-      ref: "joboffers",
+      ref: "offers",
     },
   ],
 });
