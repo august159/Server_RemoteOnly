@@ -88,7 +88,9 @@ router.patch(
 router.delete("/:id", async (req, res) => {
   try {
     const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
-    res.status(202).json(deletedUser);
+    res
+      .status(202)
+      .json({ message: `This user has been deleted: ${deletedUser.id}` });
   } catch (error) {
     res.status(500).send(error);
   }
