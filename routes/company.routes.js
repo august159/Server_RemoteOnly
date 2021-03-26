@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const CompanyModel = require("./../models/Company"); //Path to CompanyModel
-const fileUploader = require("../config/cloudinary");
+const fileUploader = require("./../config/cloudinary");
+const protectRecruiterRoute = require("./../middlewares/protectRecruiterRoute");
 
 //* Get all companies
 router.get("/", async (req, res, next) => {
@@ -43,28 +44,33 @@ router.post("/", fileUploader.single("logo"), async (req, res, next) => {
 });
 
 //* Patch: update a company
-router.patch("/:id", fileUploader.single("logo"), async (req, res, next) => {
-  const companyToUpdate = { ...req.body };
-  if (req.file) {
-    companyToUpdate.logo = req.file.path;
-  } else {
-    companyToUpdate.logo =
-      "https://res.cloudinary.com/ago59/image/upload/v1616772836/remote-only/defaultcompany_logo_a3hjlz.jpg";
+router.patch(
+  "/:id",
+  protectRecruiterRoute,
+  fileUploader.single("logo"),
+  async (req, res, next) => {
+    const companyToUpdate = { ...req.body };
+    if (req.file) {
+      companyToUpdate.logo = req.file.path;
+    } else {
+      companyToUpdate.logo =
+        "https://res.cloudinary.com/ago59/image/upload/v1616772836/remote-only/defaultcompany_logo_a3hjlz.jpg";
+    }
+    try {
+      const updatedCompany = await CompanyModel.findByIdAndUpdate(
+        req.params.id,
+        companyToUpdate,
+        { new: true }
+      );
+      res.status(202).json(updatedCompany);
+    } catch (error) {
+      res.status(500).send(error);
+    }
   }
-  try {
-    const updatedCompany = await CompanyModel.findByIdAndUpdate(
-      req.params.id,
-      companyToUpdate,
-      { new: true }
-    );
-    res.status(202).json(updatedCompany);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
+);
 
 //* Delete a company
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", protectRecruiterRoute, async (req, res) => {
   try {
     const deletedCompany = await CompanyModel.findByIdAndDelete(req.params.id);
     res.status(202).json(deletedCompany);

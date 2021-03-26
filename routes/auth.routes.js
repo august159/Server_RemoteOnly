@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/User");
 const fileUploader = require("../config/cloudinary");
+const protectRoute = require("./../middlewares/protectRoute");
 
 const salt = 10;
 
@@ -88,7 +89,7 @@ router.get("/isLoggedIn", (req, res, next) => {
     .catch(next);
 });
 
-router.get("/logout", (req, res, next) => {
+router.get("/logout", protectRoute, (req, res, next) => {
   req.session.destroy(function (error) {
     if (error) next(error);
     else res.status(200).json({ message: "Succesfully disconnected." });
