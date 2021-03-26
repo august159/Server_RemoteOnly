@@ -11,6 +11,14 @@ const applicationSchema = new Schema(
     gitHub: String,
     otherWebsite: String,
     additionalInfo: String,
+    isSelected: {
+      type: Boolean,
+      default: false,
+    },
+    isReviewed: {
+      type: Boolean,
+      default: false,
+    },
     users: [
       {
         type: Schema.Types.ObjectId,
