@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const UserModel = require("./../models/User"); //Path to UserModel
+const UserModel = require("../models/User"); //Path to UserModel
 const fileUploader = require("../config/cloudinary");
 
 //* Get all users
@@ -53,7 +53,6 @@ router.post(
 );
 
 //* Patch: update a User
-// Todo: update files
 router.patch(
   "/:id",
   fileUploader.fields([
