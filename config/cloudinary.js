@@ -17,7 +17,7 @@ const storage = new CloudinaryStorage({
   },
 });
 
-// const fileRouter = (req, res, cb) => {
+// const fileFilter = (req, res, cb) => {
 //   if (
 //     file.mimetype === "image/jpg" ||
 //     file.mimetype === "image/png" ||
@@ -25,10 +25,7 @@ const storage = new CloudinaryStorage({
 //     file.mimetype === "image/tiff" ||
 //     file.mimetype === "image/bmp" ||
 //     file.mimetype === "image/webp" ||
-//     file.mimetype === "image/jfif"
-//   ) {
-//     // Todo: identify it as avatar image
-//   } else if (
+//     file.mimetype === "image/jfif" ||
 //     file.mimetype === "application/msword" ||
 //     file.mimetype ===
 //       "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
@@ -37,7 +34,7 @@ const storage = new CloudinaryStorage({
 //     file.mimetype === "application/pdf" ||
 //     file.mimetype === "text/plain"
 //   ) {
-//     // Todo: identify as resume file
+//     cb(null, true);
 //   } else {
 //     cb({ message: "Format de fichier non supporté" }, false);
 //   }
@@ -46,7 +43,7 @@ const storage = new CloudinaryStorage({
 const fileUploader = multer({
   storage,
   limits: { filesize: 2048 * 2048 },
-  // fileRouter,
+  // fileFilter,
 }); /* Size limit of 2MB */
 // Middleware designed to parse file from requests and associate to req.file
 module.exports = fileUploader;
