@@ -6,15 +6,7 @@ const applicationSchema = new Schema(
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true },
-    phone: {
-      type: Number,
-      validate: {
-        validator: function (number) {
-          return /d{10}/.test(number);
-        },
-        message: "{VALUE} is not a valid 10 digit number!",
-      },
-    },
+    phone: String,
     linkedIn: String,
     gitHub: String,
     otherWebsite: String,

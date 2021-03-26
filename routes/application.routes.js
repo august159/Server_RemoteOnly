@@ -2,9 +2,7 @@ const express = require("express");
 const router = express.Router();
 const ApplicationModel = require("./../models/Application"); //Path to ApplicationModel
 
-router.get("/applications", (req, res, next) => {
-  // console.log("from react");
-
+router.get("/", (req, res, next) => {
   ApplicationModel.find()
     .then((appliDocuments) => {
       res.status(200).json(appliDocuments);
@@ -19,18 +17,45 @@ router.get("/:id", (req, res, next) => {
     .then((application) => {
       res.status(200).json(application);
     })
-    .catch((dberror) => {
-      next(dberror);
+    .catch((error) => {
+      next(error);
     });
 });
 
-router.post("/", (req, res, next) => {
-  let { name, description } = req.body;
-  ApplicationModel.create({ name, description })
+router.post("/modifyApplication/:id", async (req, res, next) => {
+  try {
+    const updateApplication = { ...req.body };
+    console.log(updateApplication);
+    const application = await ApplicationModel.findByIdAndUpdate(
+      req.params.id,
+      updateApplication,
+      { new: true }
+    );
+    console.log(application);
+    res.status(200).json(application);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/newApplication", (req, res, next) => {
+  const application = { ...req.body };
+  console.log(application);
+  ApplicationModel.create(application)
     .then((application) => {
       res.status(200).json(application);
     })
     .catch((err) => next(err));
+});
+
+router.delete("/delete/:id", (req, res, next) => {
+  ApplicationModel.findByIdAndDelete(req.params.id)
+    .then(() => {
+      res.status(200).json();
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 module.exports = router;
