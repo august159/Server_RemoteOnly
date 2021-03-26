@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const CompanyModel = require("./../models/Company"); //Path to CompanyModel
+const fileUploader = require("../config/cloudinary");
 
 //* Get all companies
-router.get("/route", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
-    const company = await companyModel.find();
+    const company = await CompanyModel.find();
     res.status(200).json({ company });
   } catch (error) {
     res.status(500).send(error);
@@ -24,15 +25,17 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //* Post: create a new company
-router.post("/", async (req, res, next) => {
+router.post("/", fileUploader.single("logo"), async (req, res, next) => {
   const newCompany = { ...req.body };
   if (req.file) {
     newCompany.logo = req.file.path;
   } else {
-    newCompany.logo = "";
+    newCompany.logo =
+      "https://res.cloudinary.com/ago59/image/upload/v1616772836/remote-only/defaultcompany_logo_a3hjlz.jpg";
   }
   try {
     const createdCompany = await CompanyModel.create(newCompany);
+    console.log(createdCompany);
     res.status(201).json(createdCompany);
   } catch (error) {
     res.status(500).send(error);
@@ -40,12 +43,13 @@ router.post("/", async (req, res, next) => {
 });
 
 //* Patch: update a company
-router.patch("/:id", async (req, res, next) => {
+router.patch("/:id", fileUploader.single("logo"), async (req, res, next) => {
   const companyToUpdate = { ...req.body };
   if (req.file) {
-    newCompany.logo = req.file.path;
+    companyToUpdate.logo = req.file.path;
   } else {
-    newCompany.logo = "";
+    companyToUpdate.logo =
+      "https://res.cloudinary.com/ago59/image/upload/v1616772836/remote-only/defaultcompany_logo_a3hjlz.jpg";
   }
   try {
     const updatedCompany = await CompanyModel.findByIdAndUpdate(
