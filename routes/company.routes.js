@@ -25,7 +25,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //* Post: create a new company
-router.post("/", async (req, res, next) => {
+router.post("/", fileUploader.single("logo"), async (req, res, next) => {
   const newCompany = { ...req.body };
   if (req.file) {
     newCompany.logo = req.file.path;
@@ -35,6 +35,7 @@ router.post("/", async (req, res, next) => {
   }
   try {
     const createdCompany = await CompanyModel.create(newCompany);
+    console.log(createdCompany);
     res.status(201).json(createdCompany);
   } catch (error) {
     res.status(500).send(error);
@@ -42,7 +43,7 @@ router.post("/", async (req, res, next) => {
 });
 
 //* Patch: update a company
-router.patch("/:id", async (req, res, next) => {
+router.patch("/:id", fileUploader.single("logo"), async (req, res, next) => {
   const companyToUpdate = { ...req.body };
   if (req.file) {
     companyToUpdate.logo = req.file.path;
