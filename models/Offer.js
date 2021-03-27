@@ -15,14 +15,14 @@ const offerSchema = new Schema(
       enum: [
         "Produit",
         "Design",
-        "Programmation",
+        "Tech",
         "Customer Success",
         "DevOps",
         "Sales et Marketing",
       ],
       required: true,
     },
-    profilDescription: { type: String },
+    profileDescription: { type: String },
     jobDescription: { type: String, required: true },
     recruitmentProcess: { type: String },
     startingDate: { type: Date },
@@ -33,7 +33,7 @@ const offerSchema = new Schema(
         ref: "applications",
       },
     ],
-    companies: [
+    company: [
       {
         type: Schema.Types.ObjectId,
         ref: "companies",

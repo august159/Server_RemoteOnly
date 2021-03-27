@@ -11,6 +11,7 @@ const applicationSchema = new Schema(
     linkedIn: String,
     gitHub: String,
     otherWebsite: String,
+    resume: String,
     additionalInfo: String,
     isSelected: {
       type: Boolean,
@@ -20,7 +21,7 @@ const applicationSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    users: [
+    user: [
       {
         type: Schema.Types.ObjectId,
         ref: "users",
