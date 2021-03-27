@@ -1,4 +1,4 @@
-//* create a test data set of valid users
+const mongoose = require("mongoose");
 require("dotenv").config();
 require("../../config/dbConnection"); //Path to db config aka MongoDB
 const UserModel = require("./../../models/User"); // Path to Model
@@ -53,7 +53,13 @@ const candidates = [
     console.log(
       `seed candidates done : ${inserted.length} documents inserted !`
     );
+    mongoose.connection
+      .close()
+      .then((success) => console.log("Remote connection ended"));
   } catch (err) {
     console.error(err);
+    mongoose.connection
+      .close()
+      .then((success) => console.log("Remote connection ended"));
   }
 })();

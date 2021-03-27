@@ -1,4 +1,4 @@
-//* create a test data set of valid users
+const mongoose = require("mongoose");
 require("dotenv").config();
 require("../../config/dbConnection"); //Path to db config aka MongoDB
 const ApplicationModel = require("./../../models/Application");
@@ -68,14 +68,21 @@ const applications = [
     ]);
 
     for (let i = 0; i < users.length; i++) {
-      applications[i].user = users[i];
+      applications[i].user = [];
+      applications[i].user.push(users[i]);
     }
 
     const inserted = await ApplicationModel.insertMany(applications);
     console.log(
       `seed applications done : ${inserted.length} documents inserted !`
     );
+    mongoose.connection
+      .close()
+      .then((success) => console.log("Remote connection ended"));
   } catch (err) {
     console.error(err);
+    mongoose.connection
+      .close()
+      .then((success) => console.log("Remote connection ended"));
   }
 })(); //What a closure !

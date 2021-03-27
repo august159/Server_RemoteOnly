@@ -15,7 +15,7 @@ const offerSchema = new Schema(
       enum: [
         "Produit",
         "Design",
-        "Programmation",
+        "Tech",
         "Customer Success",
         "DevOps",
         "Sales et Marketing",
@@ -33,7 +33,7 @@ const offerSchema = new Schema(
         ref: "applications",
       },
     ],
-    companies: [
+    company: [
       {
         type: Schema.Types.ObjectId,
         ref: "companies",
