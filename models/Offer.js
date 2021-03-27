@@ -22,7 +22,7 @@ const offerSchema = new Schema(
       ],
       required: true,
     },
-    profilDescription: { type: String },
+    profileDescription: { type: String },
     jobDescription: { type: String, required: true },
     recruitmentProcess: { type: String },
     startingDate: { type: Date },
