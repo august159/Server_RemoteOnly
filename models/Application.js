@@ -26,6 +26,12 @@ const applicationSchema = new Schema(
         ref: "users",
       },
     ],
+    offer: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "offers",
+      },
+    ],
   },
   { timestamps: true }
 );

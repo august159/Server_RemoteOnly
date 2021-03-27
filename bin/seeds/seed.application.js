@@ -4,8 +4,6 @@ require("../../config/dbConnection"); //Path to db config aka MongoDB
 const ApplicationModel = require("./../../models/Application");
 const UserModel = require("./../../models/User");
 
-const user = UserModel.find({ email: "candidate1@gmail.com" });
-
 //* Define data sample
 const applications = [
   {

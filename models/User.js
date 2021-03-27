@@ -21,10 +21,10 @@ const userSchema = new Schema({
   otherWebsite: String,
   additionalInfo: String,
   resume: String,
-  offers: [
+  applications: [
     {
       type: Schema.Types.ObjectId,
-      ref: "offers",
+      ref: "applications",
     },
   ],
 });
