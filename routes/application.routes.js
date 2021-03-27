@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const ApplicationModel = require("./../models/Application"); //Path to ApplicationModel
+const fileUploader = require("../config/cloudinary");
 
 router.get("/", (req, res, next) => {
   ApplicationModel.find()
@@ -22,16 +23,21 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
-router.patch("/:id", async (req, res, next) => {
+router.patch("/:id", fileUploader.single("resume"), async (req, res, next) => {
+  const appToUpdate = { ...req.body };
+  if (req.file) {
+    appToUpdate.resume = req.file.path;
+  } else {
+    appToUpdate.resume =
+      "https://res.cloudinary.com/ago59/image/upload/v1616772836/remote-only/defaultcompany_logo_a3hjlz.jpg";
+  }
   try {
     const updateApplication = { ...req.body };
-    console.log(updateApplication);
     const application = await ApplicationModel.findByIdAndUpdate(
       req.params.id,
       updateApplication,
       { new: true }
     );
-    console.log(application);
     res.status(200).json(application);
   } catch (error) {
     next(error);
