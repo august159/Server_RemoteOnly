@@ -10,6 +10,7 @@ const applicationSchema = new Schema(
     linkedIn: String,
     gitHub: String,
     otherWebsite: String,
+    resume: String,
     additionalInfo: String,
     isSelected: {
       type: Boolean,
