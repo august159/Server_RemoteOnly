@@ -67,7 +67,9 @@ const applications = [
 
     for (let i = 0; i < users.length; i++) {
       applications[i].user = [];
-      applications[i].user.push(users[i]);
+      if (users[i]) {
+        applications[i].user.push(users[i]._id);
+      }
     }
 
     const inserted = await ApplicationModel.insertMany(applications);

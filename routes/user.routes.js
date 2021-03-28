@@ -56,7 +56,7 @@ router.get("/:id", async (req, res, next) => {
 //* Patch: update a User
 router.patch(
   "/:id",
-  protectRoute,
+  // protectRoute,
   fileUploader.fields([
     { name: "avatar", maxCount: 1 },
     { name: "resume", maxCount: 1 },
@@ -73,6 +73,7 @@ router.patch(
       UserToUpdate.resume = req.files.resume[0].path;
     }
     try {
+      console.log(`UserToUpdate`, UserToUpdate);
       const updatedUser = await UserModel.findByIdAndUpdate(
         req.params.id,
         UserToUpdate,
