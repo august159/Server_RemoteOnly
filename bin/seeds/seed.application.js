@@ -4,8 +4,6 @@ require("../../config/dbConnection"); //Path to db config aka MongoDB
 const ApplicationModel = require("./../../models/Application");
 const UserModel = require("./../../models/User");
 
-const user = UserModel.find({ email: "candidate1@gmail.com" });
-
 //* Define data sample
 const applications = [
   {
@@ -69,7 +67,9 @@ const applications = [
 
     for (let i = 0; i < users.length; i++) {
       applications[i].user = [];
-      applications[i].user.push(users[i]);
+      if (users[i]) {
+        applications[i].user.push(users[i]._id);
+      }
     }
 
     const inserted = await ApplicationModel.insertMany(applications);

@@ -50,9 +50,9 @@ const companies = [
     // Attribute 1 recruiter to each company
     for (let i = 0; i < allRecruiters.length; i++) {
       companies[i].users = [];
-      companies[i].users.push(allRecruiters[i]);
+      companies[i].users.push(allRecruiters[i]._id);
     }
-    companies[1].users.push(allRecruiters[2]); // Make 1 recruiter part of 2 companies & October company having 2 recruiters
+    companies[1].users.push(allRecruiters[2]._id); // Make 1 recruiter part of 2 companies & October company having 2 recruiters
 
     const inserted = await CompanyModel.insertMany(companies);
     console.log(

@@ -60,7 +60,7 @@ const offers = [
     ]);
 
     for (let i = 0; i < companies.length; i++) {
-      offers[i].company = companies[i];
+      offers[i].company = companies[i]._id;
     }
 
     const insertedOffers = await OfferModel.insertMany(offers);

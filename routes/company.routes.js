@@ -19,6 +19,8 @@ router.get("/:id", async (req, res, next) => {
   const companyId = req.params.id;
   try {
     const searchedCompany = await CompanyModel.findById(companyId);
+    // .populate("users")
+    // .populate("offers");
     res.status(200).json({ searchedCompany });
   } catch (error) {
     res.status(500).send(error);
@@ -26,6 +28,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //* Post: create a new company
+//? Only a recruiter can create a company ?
 router.post("/", fileUploader.single("logo"), async (req, res, next) => {
   const newCompany = { ...req.body };
   if (req.file) {
@@ -44,9 +47,10 @@ router.post("/", fileUploader.single("logo"), async (req, res, next) => {
 });
 
 //* Patch: update a company
+// Todo: limit the update to a company recruiter
 router.patch(
   "/:id",
-  protectRecruiterRoute,
+  protectRecruiterRoute, // Only a recruiter can update a company
   fileUploader.single("logo"),
   async (req, res, next) => {
     const companyToUpdate = { ...req.body };
@@ -70,7 +74,9 @@ router.patch(
 );
 
 //* Delete a company
+// Todo: limit the deletion to a company recruiter
 router.delete("/:id", protectRecruiterRoute, async (req, res) => {
+  // Only a recruiter can delete a company
   try {
     const deletedCompany = await CompanyModel.findByIdAndDelete(req.params.id);
     res.status(202).json(deletedCompany);

@@ -5,7 +5,8 @@ const fileUploader = require("../config/cloudinary");
 const protectRoute = require("./../middlewares/protectRoute");
 
 //* Get all users
-router.get("/", async (req, res, next) => {
+// Todo: limit the deletion to the candidate or a same company recruiter based on their role
+router.get("/", protectRoute, async (req, res, next) => {
   try {
     const user = await UserModel.find();
     console.log(`user`, user);
@@ -16,17 +17,20 @@ router.get("/", async (req, res, next) => {
 });
 
 //* Get a specific user
-router.get("/:id", async (req, res, next) => {
+// Todo: limit the deletion to the candidate or a same company recruiter based on their role
+router.get("/:id", protectRoute, async (req, res, next) => {
   const userId = req.params.id;
   try {
     const searchedUser = await UserModel.findById(userId);
+    // .populate("companies")
+    // .populate("applications");
     res.status(200).json({ searchedUser });
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
-//* Post: create a new user
+// Post: create a new user
 // router.post(
 //   "/",
 //   fileUploader.fields([
@@ -54,6 +58,7 @@ router.get("/:id", async (req, res, next) => {
 // );
 
 //* Patch: update a User
+// Todo: limit the update to the candidate or a same company recruiter based on their role
 router.patch(
   "/:id",
   protectRoute,
@@ -73,6 +78,7 @@ router.patch(
       UserToUpdate.resume = req.files.resume[0].path;
     }
     try {
+      console.log(`UserToUpdate`, UserToUpdate);
       const updatedUser = await UserModel.findByIdAndUpdate(
         req.params.id,
         UserToUpdate,
@@ -86,6 +92,7 @@ router.patch(
 );
 
 //* Delete a user
+// Todo: limit the deletion to the candidate or a same company recruiter based on their role
 router.delete("/:id", protectRoute, async (req, res) => {
   try {
     const deletedUser = await UserModel.findByIdAndDelete(req.params.id);

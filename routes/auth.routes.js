@@ -50,15 +50,15 @@ router.post(
 
         const hashedPassword = bcrypt.hashSync(password, salt);
         const newUser = { email, password: hashedPassword, ...rest };
-        if (req.files.avatar) {
-          newUser.avatar = req.files.avatar[0].path;
-        } else {
-          newUser.avatar =
-            "https://res.cloudinary.com/ago59/image/upload/v1616755182/remote-only/default-avatar-profile-icon-vector-social-media-user-portrait-176256935_tugyui.jpg";
-        }
-        if (req.files.resume) {
-          newUser.resume = req.files.resume[0].path;
-        }
+        // if (req.files.avatar) {
+        //   newUser.avatar = req.files.avatar[0].path;
+        // } else {
+        //   newUser.avatar =
+        //     "https://res.cloudinary.com/ago59/image/upload/v1616755182/remote-only/default-avatar-profile-icon-vector-social-media-user-portrait-176256935_tugyui.jpg";
+        // }
+        // if (req.files.resume) {
+        //   newUser.resume = req.files.resume[0].path;
+        // }
 
         UserModel.create(newUser)
           .then((newUserDocument) => {

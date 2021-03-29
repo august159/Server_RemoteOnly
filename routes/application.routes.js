@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const ApplicationModel = require("./../models/Application"); //Path to ApplicationModel
-const fileUploader = require("../config/cloudinary");
+const protectRoute = require("./../middlewares/protectRoute");
+const protectCandidateRoute = require("./../middlewares/protectCandidateRoute");
 
-router.get("/", (req, res, next) => {
+//* Get all applications
+router.get("/", protectRoute, (req, res, next) => {
+  //Protection: logged candidates should be able to retrieve all their applications or one of one of their offer
   ApplicationModel.find()
     .then((appliDocuments) => {
       res.status(200).json(appliDocuments);
@@ -13,7 +16,9 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.get("/:id", (req, res, next) => {
+//* Get a specific application
+router.get("/:id", protectRoute, (req, res, next) => {
+  //Protection: logged candidates should be able to retrieve all their applications or one of one of their offer
   ApplicationModel.findById(req.params.id)
     .then((application) => {
       res.status(200).json(application);
@@ -23,28 +28,28 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
-router.patch("/:id", fileUploader.single("resume"), async (req, res, next) => {
-  const appToUpdate = { ...req.body };
-  if (req.file) {
-    appToUpdate.resume = req.file.path;
-  } else {
-    appToUpdate.resume =
-      "https://res.cloudinary.com/ago59/image/upload/v1616772836/remote-only/defaultcompany_logo_a3hjlz.jpg";
-  }
+//* Update a specific application
+// Todo: limit the update to the applicant
+router.patch("/:id", protectRoute, async (req, res, next) => {
+  //Protection: candidates can modify their application and recruiter can change their status
   try {
-    const updateApplication = { ...req.body };
     const application = await ApplicationModel.findByIdAndUpdate(
       req.params.id,
       updateApplication,
       { new: true }
     );
+    //populate User and Offer
+    // .populate("users")
+    // .populate("offers");
     res.status(200).json(application);
   } catch (error) {
     next(error);
   }
 });
 
+//* Create a new application
 router.post("/", (req, res, next) => {
+  // Everybody should be able to apply, connected or not
   const application = { ...req.body };
   console.log(application);
   ApplicationModel.create(application)
@@ -54,7 +59,10 @@ router.post("/", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.delete("/:id", (req, res, next) => {
+//* Delete an application
+// Todo: limit the deletion to the applicant
+router.delete("/:id", protectCandidateRoute, (req, res, next) => {
+  //Only candidates can delete their application
   ApplicationModel.findByIdAndDelete(req.params.id)
     .then(() => {
       res.status(200).json({ message: `Application deleted` });

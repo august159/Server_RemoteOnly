@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const OfferModel = require("./../models/Offer");
+const protectRecruiterRoute = require("./../middlewares/protectRecruiterRoute");
 
+//* Get all job offers
 router.get("/", (req, res, next) => {
   OfferModel.find()
     .then((documents) => {
@@ -12,8 +14,11 @@ router.get("/", (req, res, next) => {
     });
 });
 
+//* Get one job offer
 router.get("/:id", (req, res, next) => {
   OfferModel.findById(req.param.id)
+    // .populate("applications")
+    // .populate("companies");
     .then((offer) => {
       res.status(200).json(offer);
     })
@@ -22,7 +27,9 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
-router.patch("/:id", async (req, res, next) => {
+//* Update a specific offer
+// Todo: limit the update to a company's recruiter
+router.patch("/:id", protectRecruiterRoute, async (req, res, next) => {
   try {
     const updateOffer = { ...req.body };
     console.log(updateOffer);
@@ -37,7 +44,9 @@ router.patch("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", (req, res, next) => {
+//* Create an offer
+// Todo: limit the creation to a company's recruiter
+router.post("/", protectRecruiterRoute, (req, res, next) => {
   const offer = { ...req.body };
   OfferModel.create(offer)
     .then((offer) => {
@@ -46,7 +55,9 @@ router.post("/", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.delete("/:id", (req, res, next) => {
+//* Delete an offer
+// Todo: limit the deletion to a company's recruiter
+router.delete("/:id", protectRecruiterRoute, (req, res, next) => {
   OfferModel.findByIdAndDelete(req.params.id)
     .then(() => {
       res.status(200).json({ message: `Offer deleted` });
