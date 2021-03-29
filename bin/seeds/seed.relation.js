@@ -8,62 +8,49 @@ const CompanyModel = require("../../models/Company");
 
 (async function updateRelations() {
   //* Get all seeded information
-  const allRecruiters = await UserModel.find({ role: "recruiter" });
-  const allCandidates = await UserModel.find({ role: "candidate" });
+  // const allRecruiters = await UserModel.find({ role: "recruiter" });
+  // const allCandidates = await UserModel.find({ role: "candidate" });
   const allCompanies = await CompanyModel.find();
   const allOffers = await OfferModel.find();
   const allApplications = await ApplicationModel.find();
 
   try {
-    //* Link applications in offers
-    allOffers.forEach((offer) => (offer.applications = [])); //Initialize applications in offers as an array
-    allOffers[0].applications.push(
-      allApplications[0]._id,
-      allApplications[1]._id
-    ); //Push applications 1 & 2 to offer 1
-    allOffers[1].applications.push(allApplications[2]._id); //Push application 3 to offer 2
-    allOffers[2].applications.push(allApplications[3]._id); //Push application 4 to offer 3
-    allOffers.forEach(
-      async (offer) =>
-        await OfferModel.findByIdAndUpdate(offer._id, offer, { new: true })
-    );
+    // //* Link offer in applications
+    console.log("1");
+    allApplications[0].offer = allOffers[0]._id; // Application to offer 1
+    allApplications[1].offer = allOffers[0]._id; // Application to offer 1
+    allApplications[2].offer = allOffers[1]._id; // Application to offer 2
+    allApplications[3].offer = allOffers[2]._id; // Application to offer 3
 
-    //! This method below only works because a 1-1 relation but we should push in real life
-
-    //* Link offer into applications
-    allOffers.forEach((offer) => {
-      offer.applications.forEach(async (applicationId) => {
+    async function updateApplications() {
+      for (let application of allApplications) {
         await ApplicationModel.findByIdAndUpdate(
-          applicationId,
-          { offer: [offer._id] },
-          {
-            new: true,
-          }
-        );
-      });
-    });
-
-    //* Link applications into candidate users
-    allApplications.forEach((application) => {
-      application.user.forEach(async (userId) => {
-        await UserModel.findByIdAndUpdate(
-          userId,
-          { applications: [application._id] },
+          application._id,
+          { offer: application.offer },
           { new: true }
         );
-      });
-    });
+      }
+    }
 
-    //* Link offers into companies
-    allOffers.forEach((offer) => {
-      offer.company.forEach(async (companyId) => {
-        await CompanyModel.findByIdAndUpdate(
-          companyId,
-          { offers: [offer._id] },
-          { new: true }
-        );
-      });
-    });
+    updateApplications();
+
+    //* Link companies into recruiters
+    console.log("5");
+    async function linkCompaniesRecruiter() {
+      //! Always use for...of (sequence) or Promise.all (parallel) with promise & not forEach
+      for (let company of allCompanies) {
+        for (let userId of company.users) {
+          await UserModel.findByIdAndUpdate(
+            userId,
+            { $addToSet: { companies: [company._id] } }, //addToSet is equivalent to push but checks if the value exists in the db before
+            { new: true }
+          );
+          console.log("5.1");
+        }
+      }
+    }
+
+    linkCompaniesRecruiter();
 
     console.log(`Reverse relations completed !`);
     // mongoose.connection

@@ -21,12 +21,6 @@ const userSchema = new Schema({
   otherWebsite: String,
   additionalInfo: String,
   resume: String,
-  applications: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "applications",
-    },
-  ],
 });
 
 const UserModel = mongoose.model("users", userSchema);

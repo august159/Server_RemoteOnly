@@ -9,12 +9,6 @@ const companySchema = new Schema({
   industry: String,
   size: String,
   description: String,
-  offers: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "offers",
-    },
-  ],
   users: [
     {
       type: Schema.Types.ObjectId,

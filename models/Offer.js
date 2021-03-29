@@ -27,18 +27,10 @@ const offerSchema = new Schema(
     recruitmentProcess: { type: String },
     startingDate: { type: Date },
     status: { type: Boolean, enum: ["true", "false"] },
-    applications: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "applications",
-      },
-    ],
-    company: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "companies",
-      },
-    ],
+    company: {
+      type: Schema.Types.ObjectId,
+      ref: "companies",
+    },
   },
   { timestamps: true }
 );

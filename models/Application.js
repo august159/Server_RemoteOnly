@@ -20,18 +20,14 @@ const applicationSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    user: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "users",
-      },
-    ],
-    offer: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "offers",
-      },
-    ],
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+    },
+    offer: {
+      type: Schema.Types.ObjectId,
+      ref: "offers",
+    },
   },
   { timestamps: true }
 );

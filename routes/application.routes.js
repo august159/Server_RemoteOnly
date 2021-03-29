@@ -6,7 +6,7 @@ const protectCandidateRoute = require("./../middlewares/protectCandidateRoute");
 
 //* Get all applications
 router.get("/", protectRoute, (req, res, next) => {
-  //Protection: logged candidates should be able to retrieve all their applications or one of one of their offer
+  //Protection: only logged candidates should be able to retrieve all their applications or a recruiter should get the applications of one of his company's offer
   ApplicationModel.find()
     .then((appliDocuments) => {
       res.status(200).json(appliDocuments);
@@ -18,7 +18,7 @@ router.get("/", protectRoute, (req, res, next) => {
 
 //* Get a specific application
 router.get("/:id", protectRoute, (req, res, next) => {
-  //Protection: logged candidates should be able to retrieve all their applications or one of one of their offer
+  //Protection: only logged candidates should be able to retrieve all their applications or a recruiter should get the applications of one of his company's offer
   ApplicationModel.findById(req.params.id)
     .then((application) => {
       res.status(200).json(application);
@@ -31,7 +31,7 @@ router.get("/:id", protectRoute, (req, res, next) => {
 //* Update a specific application
 // Todo: limit the update to the applicant
 router.patch("/:id", protectRoute, async (req, res, next) => {
-  //Protection: candidates can modify their application and recruiter can change their status
+  //Protection: only logged candidates should be able to retrieve all their applications or a recruiter should get the applications of one of his company's offer
   try {
     const application = await ApplicationModel.findByIdAndUpdate(
       req.params.id,
@@ -52,6 +52,10 @@ router.post("/", (req, res, next) => {
   console.log(application);
   ApplicationModel.create(application)
     .then((application) => {
+      if (req.session.currentUser.role === "candidate") {
+        // Update application.user if logged as a candidate
+        application.user = [req.session.currentUser.id];
+      }
       res.status(200).json(application);
     })
     .catch((err) => next(err));
