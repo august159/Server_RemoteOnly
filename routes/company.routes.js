@@ -39,9 +39,9 @@ router.post("/", fileUploader.single("logo"), async (req, res, next) => {
   }
 
   // Add the recruiter id to the company
-  if (req.session.currentUser.role === "recruiter") {
-    newCompany.users.push(req.session.currentUser.id);
-  }
+  // if (req.session.currentUser.role === "recruiter") {
+  //   newCompany.users.push(req.session.currentUser.id);
+  // }
 
   try {
     const createdCompany = await CompanyModel.create(newCompany);

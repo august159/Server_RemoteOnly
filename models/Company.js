@@ -7,7 +7,7 @@ const companySchema = new Schema({
   city: String,
   website: { type: String, required: true },
   industry: String,
-  size: String,
+  size: Number,
   description: String,
   users: [
     {

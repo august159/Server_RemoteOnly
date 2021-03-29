@@ -17,7 +17,8 @@ router.get("/", async (req, res, next) => {
 
 //* Get one job offer
 router.get("/:id", (req, res, next) => {
-  OfferModel.findById(req.param.id)
+  console.log(`req.params.id`, req.param.id);
+  OfferModel.findById(req.params.id)
     .then((offer) => {
       res.status(200).json(offer);
     })

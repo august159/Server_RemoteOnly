@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const ApplicationModel = require("./../models/Application"); //Path to ApplicationModel
 const protectRoute = require("./../middlewares/protectRoute");
+const fileUploader = require("../config/cloudinary");
 const protectCandidateRoute = require("./../middlewares/protectCandidateRoute");
 
 //* Get all applications
@@ -51,19 +52,17 @@ router.patch("/:id", protectRoute, async (req, res, next) => {
 });
 
 //* Create a new application
-router.post("/", (req, res, next) => {
-  // Everybody should be able to apply, connected or not
-  const application = { ...req.body }; //! Offer.id need to be passed from the front end in the req body
-  ApplicationModel.create(application)
-    .then((application) => {
-      // Attribute candidate id as the user.id
-      if (req.session.currentUser.role === "candidate") {
-        application.user = req.session.currentUser.id;
-      }
-
-      res.status(200).json(application);
-    })
-    .catch((err) => next(err));
+router.post("/", fileUploader.single("resume"), async (req, res, next) => {
+  const newApplication = { ...req.body };
+  if (req.file) {
+    newApplication.resume = req.file.path;
+  }
+  try {
+    const createdApplication = await ApplicationModel.create(newApplication);
+    res.status(201).json(createdApplication);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 //* Delete an application
