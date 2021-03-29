@@ -7,7 +7,7 @@ const protectRecruiterRoute = require("./../middlewares/protectRecruiterRoute");
 //* Get all companies
 router.get("/", async (req, res, next) => {
   try {
-    const company = await CompanyModel.find();
+    const company = await CompanyModel.find().populate("user");
     res.status(200).json({ company });
   } catch (error) {
     res.status(500).send(error);
@@ -29,12 +29,20 @@ router.get("/:id", async (req, res, next) => {
 //? Only a recruiter can create a company ?
 router.post("/", fileUploader.single("logo"), async (req, res, next) => {
   const newCompany = { ...req.body };
+
+  // Import logo if there is one
   if (req.file) {
     newCompany.logo = req.file.path;
   } else {
     newCompany.logo =
       "https://res.cloudinary.com/ago59/image/upload/v1616772836/remote-only/defaultcompany_logo_a3hjlz.jpg";
   }
+
+  // Add the recruiter id to the company
+  if (req.session.currentUser.role === "recruiter") {
+    newCompany.users.push(req.session.currentUser.id);
+  }
+
   try {
     const createdCompany = await CompanyModel.create(newCompany);
     console.log(createdCompany);

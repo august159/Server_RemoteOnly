@@ -8,6 +8,11 @@ const protectCandidateRoute = require("./../middlewares/protectCandidateRoute");
 router.get("/", protectRoute, (req, res, next) => {
   //Protection: only logged candidates should be able to retrieve all their applications or a recruiter should get the applications of one of his company's offer
   ApplicationModel.find()
+    .populate("user")
+    .populate({
+      path: "offer",
+      populate: { path: "company" },
+    })
     .then((appliDocuments) => {
       res.status(200).json(appliDocuments);
     })
@@ -37,7 +42,7 @@ router.patch("/:id", protectRoute, async (req, res, next) => {
       req.params.id,
       updateApplication,
       { new: true }
-    );
+    ).populate("user");
     console.log(application);
     res.status(200).json(application);
   } catch (error) {
@@ -48,14 +53,14 @@ router.patch("/:id", protectRoute, async (req, res, next) => {
 //* Create a new application
 router.post("/", (req, res, next) => {
   // Everybody should be able to apply, connected or not
-  const application = { ...req.body };
-  console.log(application);
+  const application = { ...req.body }; //! Offer.id need to be passed from the front end in the req body
   ApplicationModel.create(application)
     .then((application) => {
+      // Attribute candidate id as the user.id
       if (req.session.currentUser.role === "candidate") {
-        // Update application.user if logged as a candidate
-        application.user = [req.session.currentUser.id];
+        application.user = req.session.currentUser.id;
       }
+
       res.status(200).json(application);
     })
     .catch((err) => next(err));

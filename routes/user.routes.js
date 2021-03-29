@@ -8,7 +8,7 @@ const protectRoute = require("./../middlewares/protectRoute");
 // Todo: limit the consultation to the candidate or a same company recruiter based on their role
 router.get("/", protectRoute, async (req, res, next) => {
   try {
-    const user = await UserModel.find();
+    const user = await UserModel.find().populate("companies");
     console.log(`user`, user);
     res.status(200).json({ user });
   } catch (error) {
