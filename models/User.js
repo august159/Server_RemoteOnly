@@ -5,8 +5,8 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   avatar: String,
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
+  firstName: { type: String /*required: true*/ },
+  lastName: { type: String /*required: true*/ },
   role: { type: String, enum: ["recruiter", "candidate"], required: true },
   position: String,
   companies: [
@@ -21,12 +21,6 @@ const userSchema = new Schema({
   otherWebsite: String,
   additionalInfo: String,
   resume: String,
-  applications: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "applications",
-    },
-  ],
 });
 
 const UserModel = mongoose.model("users", userSchema);

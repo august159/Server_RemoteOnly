@@ -5,10 +5,10 @@ const fileUploader = require("../config/cloudinary");
 const protectRoute = require("./../middlewares/protectRoute");
 
 //* Get all users
-// Todo: limit the deletion to the candidate or a same company recruiter based on their role
+// Todo: limit the consultation to the candidate or a same company recruiter based on their role
 router.get("/", protectRoute, async (req, res, next) => {
   try {
-    const user = await UserModel.find();
+    const user = await UserModel.find().populate("companies");
     console.log(`user`, user);
     res.status(200).json({ user });
   } catch (error) {
@@ -17,7 +17,7 @@ router.get("/", protectRoute, async (req, res, next) => {
 });
 
 //* Get a specific user
-// Todo: limit the deletion to the candidate or a same company recruiter based on their role
+// Todo: limit the consultation to the candidate or a same company recruiter based on their role
 router.get("/:id", protectRoute, async (req, res, next) => {
   const userId = req.params.id;
   try {

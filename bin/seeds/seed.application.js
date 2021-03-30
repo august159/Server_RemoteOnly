@@ -54,7 +54,7 @@ const applications = [
   },
 ];
 
-(async function insertApplications() {
+(async function insertApplication() {
   try {
     await ApplicationModel.deleteMany();
 
@@ -66,9 +66,8 @@ const applications = [
     ]);
 
     for (let i = 0; i < users.length; i++) {
-      applications[i].user = [];
       if (users[i]) {
-        applications[i].user.push(users[i]._id);
+        applications[i].user = users[i]._id;
       }
     }
 

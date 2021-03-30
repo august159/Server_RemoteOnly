@@ -6,8 +6,13 @@ const protectCandidateRoute = require("./../middlewares/protectCandidateRoute");
 
 //* Get all applications
 router.get("/", protectRoute, (req, res, next) => {
-  //Protection: logged candidates should be able to retrieve all their applications or one of one of their offer
+  //Protection: only logged candidates should be able to retrieve all their applications or a recruiter should get the applications of one of his company's offer
   ApplicationModel.find()
+    .populate("user")
+    .populate({
+      path: "offer",
+      populate: { path: "company" },
+    })
     .then((appliDocuments) => {
       res.status(200).json(appliDocuments);
     })
@@ -18,7 +23,7 @@ router.get("/", protectRoute, (req, res, next) => {
 
 //* Get a specific application
 router.get("/:id", protectRoute, (req, res, next) => {
-  //Protection: logged candidates should be able to retrieve all their applications or one of one of their offer
+  //Protection: only logged candidates should be able to retrieve all their applications or a recruiter should get the applications of one of his company's offer
   ApplicationModel.findById(req.params.id)
     .then((application) => {
       res.status(200).json(application);
@@ -31,16 +36,14 @@ router.get("/:id", protectRoute, (req, res, next) => {
 //* Update a specific application
 // Todo: limit the update to the applicant
 router.patch("/:id", protectRoute, async (req, res, next) => {
-  //Protection: candidates can modify their application and recruiter can change their status
+  //Protection: only logged candidates should be able to retrieve all their applications or a recruiter should get the applications of one of his company's offer
   try {
     const application = await ApplicationModel.findByIdAndUpdate(
       req.params.id,
       updateApplication,
       { new: true }
-    );
-    //populate User and Offer
-    // .populate("users")
-    // .populate("offers");
+    ).populate("user");
+    console.log(application);
     res.status(200).json(application);
   } catch (error) {
     next(error);
@@ -50,10 +53,14 @@ router.patch("/:id", protectRoute, async (req, res, next) => {
 //* Create a new application
 router.post("/", (req, res, next) => {
   // Everybody should be able to apply, connected or not
-  const application = { ...req.body };
-  console.log(application);
+  const application = { ...req.body }; //! Offer.id need to be passed from the front end in the req body
   ApplicationModel.create(application)
     .then((application) => {
+      // Attribute candidate id as the user.id
+      if (req.session.currentUser.role === "candidate") {
+        application.user = req.session.currentUser.id;
+      }
+
       res.status(200).json(application);
     })
     .catch((err) => next(err));
