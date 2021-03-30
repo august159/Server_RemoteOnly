@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const ApplicationModel = require("./../models/Application"); //Path to ApplicationModel
 const protectRoute = require("./../middlewares/protectRoute");
+const fileUploader = require("../config/cloudinary");
 const protectCandidateRoute = require("./../middlewares/protectCandidateRoute");
 
 //* Get all applications
@@ -34,7 +35,7 @@ router.get("/:id", protectRoute, (req, res, next) => {
 });
 
 //* Update a specific application
-// Todo: limit the update to the applicant
+// TODO: limit the update to the applicant
 router.patch("/:id", protectRoute, async (req, res, next) => {
   //Protection: only logged candidates should be able to retrieve all their applications or a recruiter should get the applications of one of his company's offer
   try {
@@ -51,23 +52,21 @@ router.patch("/:id", protectRoute, async (req, res, next) => {
 });
 
 //* Create a new application
-router.post("/", (req, res, next) => {
-  // Everybody should be able to apply, connected or not
-  const application = { ...req.body }; //! Offer.id need to be passed from the front end in the req body
-  ApplicationModel.create(application)
-    .then((application) => {
-      // Attribute candidate id as the user.id
-      if (req.session.currentUser.role === "candidate") {
-        application.user = req.session.currentUser.id;
-      }
-
-      res.status(200).json(application);
-    })
-    .catch((err) => next(err));
+router.post("/", fileUploader.single("resume"), async (req, res, next) => {
+  const newApplication = { ...req.body };
+  if (req.file) {
+    newApplication.resume = req.file.path;
+  }
+  try {
+    const createdApplication = await ApplicationModel.create(newApplication);
+    res.status(201).json(createdApplication);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 //* Delete an application
-// Todo: limit the deletion to the applicant
+// TODO: limit the deletion to the applicant
 router.delete("/:id", protectCandidateRoute, (req, res, next) => {
   //Only candidates can delete their application
   ApplicationModel.findByIdAndDelete(req.params.id)

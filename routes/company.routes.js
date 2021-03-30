@@ -41,9 +41,9 @@ router.post("/", fileUploader.single("logo"), async (req, res, next) => {
   }
 
   // Add the recruiter id to the company
-  if (req.session.currentUser.role === "recruiter") {
-    newCompany.users.push(req.session.currentUser.id);
-  }
+  // if (req.session.currentUser.role === "recruiter") {
+  //   newCompany.users.push(req.session.currentUser.id);
+  // }
 
   try {
     const createdCompany = await CompanyModel.create(newCompany);
@@ -55,7 +55,7 @@ router.post("/", fileUploader.single("logo"), async (req, res, next) => {
 });
 
 //* Patch: update a company
-// Todo: limit the update to a company recruiter
+// TODO: limit the update to a company recruiter
 router.patch(
   "/:id",
   protectRecruiterRoute, // Only a recruiter can update a company
@@ -82,7 +82,7 @@ router.patch(
 );
 
 //* Delete a company
-// Todo: limit the deletion to a company recruiter
+// TODO: limit the deletion to a company recruiter
 router.delete("/:id", protectRecruiterRoute, async (req, res) => {
   // Only a recruiter can delete a company
   try {

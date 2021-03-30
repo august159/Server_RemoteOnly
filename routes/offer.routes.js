@@ -18,8 +18,6 @@ router.get("/", async (req, res, next) => {
 //* Get one job offer
 router.get("/:id", (req, res, next) => {
   OfferModel.findById(req.params.id)
-    // .populate("applications")
-    // .populate("companies");
     .then((offer) => {
       console.log(`offer`, offer);
       res.status(200).json(offer);
@@ -30,7 +28,7 @@ router.get("/:id", (req, res, next) => {
 });
 
 //* Update a specific offer
-// Todo: limit the update to a company's recruiter
+// TODO: limit the update to a company's recruiter
 router.patch("/:id", protectRecruiterRoute, async (req, res, next) => {
   try {
     const updateOffer = { ...req.body };
@@ -47,7 +45,7 @@ router.patch("/:id", protectRecruiterRoute, async (req, res, next) => {
 });
 
 //* Create an offer
-// Todo: limit the creation to a company's recruiter
+// TODO: limit the creation to a company's recruiter
 router.post("/", protectRecruiterRoute, (req, res, next) => {
   const offer = { ...req.body }; //! Company.id need to be passed from the front end in the req body
   OfferModel.create(offer)
@@ -58,7 +56,7 @@ router.post("/", protectRecruiterRoute, (req, res, next) => {
 });
 
 //* Delete an offer
-// Todo: limit the deletion to a company's recruiter
+// TODO: limit the deletion to a company's recruiter
 router.delete("/:id", protectRecruiterRoute, (req, res, next) => {
   OfferModel.findByIdAndDelete(req.params.id)
     .then(() => {

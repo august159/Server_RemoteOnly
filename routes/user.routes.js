@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const UserModel = require("../models/User"); //Path to UserModel
+const ApplicationModel = require("../models/Application");
 const fileUploader = require("../config/cloudinary");
 const protectRoute = require("./../middlewares/protectRoute");
 
 //* Get all users
-// Todo: limit the consultation to the candidate or a same company recruiter based on their role
+// TODO: limit the consultation to the candidate or a same company recruiter based on their role
 router.get("/", protectRoute, async (req, res, next) => {
   try {
     const user = await UserModel.find().populate("companies");
@@ -17,14 +18,13 @@ router.get("/", protectRoute, async (req, res, next) => {
 });
 
 //* Get a specific user
-// Todo: limit the consultation to the candidate or a same company recruiter based on their role
+// TODO: limit the consultation to the candidate or a same company recruiter based on their role
 router.get("/:id", protectRoute, async (req, res, next) => {
   const userId = req.params.id;
   try {
     const searchedUser = await UserModel.findById(userId);
-    // .populate("companies")
-    // .populate("applications");
-    res.status(200).json({ searchedUser });
+    const applications = await ApplicationModel.find({ user: userId }); //Allows to retrieve all applications of one user
+    res.status(200).json({ searchedUser, applications });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -58,7 +58,7 @@ router.get("/:id", protectRoute, async (req, res, next) => {
 // );
 
 //* Patch: update a User
-// Todo: limit the update to the candidate or a same company recruiter based on their role
+// TODO: limit the update to the candidate or a same company recruiter based on their role
 router.patch(
   "/:id",
   protectRoute,
@@ -92,7 +92,7 @@ router.patch(
 );
 
 //* Delete a user
-// Todo: limit the deletion to the candidate or a same company recruiter based on their role
+// TODO: limit the deletion to the candidate or a same company recruiter based on their role
 router.delete("/:id", protectRoute, async (req, res) => {
   try {
     const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
