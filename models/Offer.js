@@ -26,7 +26,7 @@ const offerSchema = new Schema(
     jobDescription: { type: String, required: true },
     recruitmentProcess: { type: String },
     startingDate: { type: Date },
-    status: { type: Boolean, enum: ["true", "false"] },
+    isActive: { type: Boolean, enum: ["true", "false"] },
     company: {
       type: Schema.Types.ObjectId,
       ref: "companies",

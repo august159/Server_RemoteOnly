@@ -17,7 +17,7 @@ const offers = [
       "Notre candidat idéal est une personne autonome qui est passionnée par le fait de faire travailler ensemble les technologies de big data et de science des données pour résoudre des problèmes commerciaux, et qui aidera efficacement les clients à résoudre leurs problèmes techniques avec Dataiku DSS. Si vous souhaitez rester à la pointe du big data et de l'IA tout en ayant l'opportunité de rejoindre une startup en pleine croissance alors que nous cherchons à étendre notre opération de support au niveau mondial, ce poste vous conviendra parfaitement. Vous pourriez être un bon candidat si vous avez : > Une forte compétence dans la résolution de problèmes techniques, avec une expérience démontrée de travail avec l'analyse avancée des journaux et d'autres techniques de débogage. > Vous maîtrisez les systèmes d'exploitation basés sur Unix. > Vous êtes à l'aise dans l'utilisation et la lecture du code client > Expérience de travail avec au moins un type de base de données relationnelle et SQL. > Du cran face aux problèmes techniques - vous ne vous reposez pas avant d'avoir compris ce qui se passe et pourquoi les choses ne fonctionnent pas. > Excellentes compétences en matière de résolution de problèmes et d'analyse, avec une aptitude à apprendre de nouvelles technologies.> Excellentes aptitudes à la communication et capacité d'interagir avec des personnes tant techniques que non techniques, selon les besoins. > Capacité à être autonome, ingénieux et proactif, tout en restant orienté processus et en ayant l'esprit d'équipe. Points bonus pour tous ces éléments : > Au moins 4 à 6 ans d'expérience dans un rôle technique ou d'ingénierie en contact avec le client, idéalement dans un logiciel/produit complexe et en évolution rapide. > Expérience de travail avec une multitude de technologies d'analyse et de big data (telles que Hadoop, Spark, Docker/K8s et diverses autres technologies de base de données ou de BI). > Expérience pratique avec Python et/ou R > Connaissance pratique de diverses technologies de cloud computing (AWS, Azure, GCP, etc.) > Expérience des systèmes d'authentification et d'autorisation tels que LDAP, SAML et Kerberos.",
     recruitmentProcess: "Un entretien opréationnel + un entretien RH",
     startingDate: "2021-06-01",
-    status: true,
+    isActive: true,
   },
   {
     title: "Global Product Marketing Intern (6 MOIS)",
@@ -31,7 +31,7 @@ const offers = [
     recruitmentProcess:
       "1️⃣Entretien en visioconférence avec Olivia Lauret, Senior Product Marketing Manager 🌍 (30 mins) : Valeur ajoutée, réalisations clés, motivations, adéquation avec le poste 2️⃣Entretien en visioconférence avec Olivia Lauret sur une étude de cas 🌍(1 hr) 3️⃣Entretien en visioconférence avec Yannick, Global Product Marketing Director (30 min) 4️⃣Meet the team 🌍 : Clémentine Van Dijk, Emmanuelle Fasciale, Héloise Beauchesne (30 min).",
     startingDate: "2021-05-02",
-    status: true,
+    isActive: true,
   },
   {
     title: "Back-end Developer",
@@ -45,7 +45,7 @@ const offers = [
     recruitmentProcess:
       "1) Tout d'abord, un appel de présentation de 20 minutes avec notre CTO 2) Un projet maison en JavaScript (vous avez une semaine pour le réaliser), 3) Ensuite, un entretien d'une heure avec le CTO et un développeur principal, 4) Enfin, un entretien d'une heure avec notre responsable des opérations internes (avec un exercice de modélisation des données) et un autre développeur.",
     startingDate: "2021-05-02",
-    status: true,
+    isActive: true,
   },
 ];
 
