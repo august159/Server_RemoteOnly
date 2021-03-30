@@ -23,7 +23,9 @@ router.get("/:id", protectRoute, async (req, res, next) => {
   const userId = req.params.id;
   try {
     const searchedUser = await UserModel.findById(userId);
-    const applications = await ApplicationModel.find({ user: userId }); //Allows to retrieve all applications of one user
+    const applications = await ApplicationModel.find({ user: userId }).populate(
+      "offer"
+    ); //Allows to retrieve all offers applied & applications of one user
     res.status(200).json({ searchedUser, applications });
   } catch (error) {
     res.status(500).send(error);
