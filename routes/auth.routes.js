@@ -50,7 +50,7 @@ router.post(
 
         const hashedPassword = bcrypt.hashSync(password, salt);
         const newUser = { email, password: hashedPassword, ...rest };
-        if (req.files.avatar) {
+        if (req.files && req.files.avatar) {
           newUser.avatar = req.files.avatar[0].path;
         } else {
           newUser.avatar =
@@ -75,9 +75,9 @@ router.post(
   }
 );
 
-router.get("/isLoggedIn", (req, res, next) => {
-  if (!req.session.currentUser)
-    return res.status(401).json({ message: "Unauthorized" });
+router.get("/isLoggedIn", protectRoute, (req, res, next) => {
+  // if (!req.session.currentUser)
+  //   return res.status(401).json({ message: "Unauthorized" });
 
   const id = req.session.currentUser.id;
 
