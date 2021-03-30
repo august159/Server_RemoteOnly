@@ -35,7 +35,7 @@ router.get("/:id", protectRoute, (req, res, next) => {
 });
 
 //* Update a specific application
-// Todo: limit the update to the applicant
+// TODO: limit the update to the applicant
 router.patch("/:id", protectRoute, async (req, res, next) => {
   //Protection: only logged candidates should be able to retrieve all their applications or a recruiter should get the applications of one of his company's offer
   try {
@@ -66,7 +66,7 @@ router.post("/", fileUploader.single("resume"), async (req, res, next) => {
 });
 
 //* Delete an application
-// Todo: limit the deletion to the applicant
+// TODO: limit the deletion to the applicant
 router.delete("/:id", protectCandidateRoute, (req, res, next) => {
   //Only candidates can delete their application
   ApplicationModel.findByIdAndDelete(req.params.id)

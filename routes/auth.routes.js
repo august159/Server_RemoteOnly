@@ -80,6 +80,7 @@ router.get("/isLoggedIn", protectRoute, (req, res, next) => {
   //   return res.status(401).json({ message: "Unauthorized" });
 
   const id = req.session.currentUser.id;
+  console.log(`id`, id);
 
   UserModel.findById(id)
     .select("-password")
