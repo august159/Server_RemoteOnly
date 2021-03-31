@@ -17,6 +17,18 @@ router.get("/", protectRoute, async (req, res, next) => {
   }
 });
 
+router.get("/applications/me", protectRoute, async (req, res, next) => {
+  try {
+    const searchedUser = await UserModel.findById(req.session.currentUser.id);
+    const applications = await ApplicationModel.find({
+      user: req.session.currentUser.id,
+    }).populate({ path: "offer", populate: { path: "company" } }); //Allows to retrieve all offers applied & applications of one user
+    res.status(200).json({ searchedUser, applications });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 //* Get a specific user
 // TODO: limit the consultation to the candidate or a same company recruiter based on their role
 router.get("/:id", protectRoute, async (req, res, next) => {
