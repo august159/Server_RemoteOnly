@@ -7,6 +7,7 @@ const protectRecruiterRoute = require("./../middlewares/protectRecruiterRoute");
 //* Get all job offers
 router.get("/", async (req, res, next) => {
   OfferModel.find()
+    .populate("company")
     .then((documents) => {
       res.status(200).json(documents);
     })
