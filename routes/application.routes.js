@@ -28,6 +28,7 @@ router.get("/:id", protectRoute, (req, res, next) => {
   ApplicationModel.findById(req.params.id)
     .populate("offer")
     .then((application) => {
+      console.log(`application`, application);
       res.status(200).json(application);
     })
     .catch((error) => {
