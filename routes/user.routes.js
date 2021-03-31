@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const UserModel = require("../models/User"); //Path to UserModel
 const ApplicationModel = require("../models/Application");
+const OfferModel = require("../models/Offer");
 const fileUploader = require("../config/cloudinary");
 const protectRoute = require("./../middlewares/protectRoute");
 
@@ -17,13 +18,30 @@ router.get("/", protectRoute, async (req, res, next) => {
   }
 });
 
-router.get("/me", protectRoute, async (req, res, next) => {
+//* Get applications and offers of a logged_in candidate
+router.get("/candidate", protectRoute, async (req, res, next) => {
   try {
     const searchedUser = await UserModel.findById(req.session.currentUser.id);
     const applications = await ApplicationModel.find({
       user: req.session.currentUser.id,
     }).populate({ path: "offer", populate: { path: "company" } }); //Allows to retrieve all offers applied & applications of one user
     res.status(200).json({ searchedUser, applications });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+//* Get offers for a logged_in recruiter
+router.get("/recruiter", protectRoute, async (req, res, next) => {
+  try {
+    const searchedUser = await UserModel.findById(
+      req.session.currentUser.id
+    ).populate("companies");
+    const companiesId = searchedUser.companies.map((company) => company._id);
+    const offers = await OfferModel.find({
+      company: { $in: companiesId },
+    }).populate("company");
+    res.status(200).json({ searchedUser, offers });
   } catch (error) {
     res.status(500).send(error);
   }

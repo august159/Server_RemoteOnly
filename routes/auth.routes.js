@@ -56,7 +56,7 @@ router.post(
           newUser.avatar =
             "https://res.cloudinary.com/ago59/image/upload/v1616755182/remote-only/default-avatar-profile-icon-vector-social-media-user-portrait-176256935_tugyui.jpg";
         }
-        if (req.files.resume) {
+        if (req.files) {
           newUser.resume = req.files.resume[0].path;
         }
 
