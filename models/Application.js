@@ -7,10 +7,10 @@ const applicationSchema = new Schema(
     lastName: { type: String, required: true },
     email: { type: String, required: true },
     phone: String,
+    resume: String,
     linkedIn: String,
     gitHub: String,
     otherWebsite: String,
-    resume: String,
     additionalInfo: String,
     isSelected: {
       type: Boolean,
