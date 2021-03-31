@@ -17,7 +17,7 @@ router.get("/", protectRoute, async (req, res, next) => {
   }
 });
 
-router.get("/me", protectRoute, async (req, res, next) => {
+router.get("/applications/me", protectRoute, async (req, res, next) => {
   try {
     const searchedUser = await UserModel.findById(req.session.currentUser.id);
     const applications = await ApplicationModel.find({
