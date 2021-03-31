@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const OfferModel = require("./../models/Offer");
+const ApplicationModel = require("./../models/Application");
 const protectRecruiterRoute = require("./../middlewares/protectRecruiterRoute");
 
 //* Get all job offers
 router.get("/", async (req, res, next) => {
   OfferModel.find()
-    .populate("company")
     .then((documents) => {
       res.status(200).json(documents);
     })
@@ -15,15 +15,16 @@ router.get("/", async (req, res, next) => {
     });
 });
 
-//* Get one job offer
-router.get("/:id", (req, res, next) => {
-  OfferModel.findById(req.params.id)
-    .then((offer) => {
-      res.status(200).json(offer);
-    })
-    .catch((error) => {
-      next(error);
-    });
+//* Get a specific offer
+router.get("/:id", async (req, res, next) => {
+  const offerId = req.params.id;
+  try {
+    const searchedOffer = await OfferModel.findById(offerId);
+    const applications = await ApplicationModel.find({ offer: offerId });
+    res.status(200).json({ searchedOffer, applications });
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 //* Update a specific offer

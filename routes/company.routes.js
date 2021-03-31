@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const CompanyModel = require("./../models/Company"); //Path to CompanyModel
+const OfferModel = require("./../models/Offer");
 const fileUploader = require("./../config/cloudinary");
 const protectRecruiterRoute = require("./../middlewares/protectRecruiterRoute");
 
@@ -17,12 +18,13 @@ router.get("/", async (req, res, next) => {
 //* Get a specific company
 router.get("/:id", async (req, res, next) => {
   const companyId = req.params.id;
-  try {
-    const searchedCompany = await CompanyModel.findById(companyId);
-    res.status(200).json({ searchedCompany });
-  } catch (error) {
-    res.status(500).send(error);
-  }
+  // try {
+  const searchedCompany = await CompanyModel.findById(companyId);
+  const offers = await OfferModel.find({ company: companyId });
+  res.status(200).json({ searchedCompany, offers });
+  // } catch (error) {
+  //   res.status(500).send(error);
+  // }
 });
 
 //* Post: create a new company

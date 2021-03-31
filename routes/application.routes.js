@@ -26,6 +26,7 @@ router.get("/", protectRoute, (req, res, next) => {
 router.get("/:id", protectRoute, (req, res, next) => {
   //Protection: only logged candidates should be able to retrieve all their applications or a recruiter should get the applications of one of his company's offer
   ApplicationModel.findById(req.params.id)
+    .populate("offer")
     .then((application) => {
       res.status(200).json(application);
     })
