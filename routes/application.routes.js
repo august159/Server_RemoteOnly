@@ -59,6 +59,7 @@ router.post("/", fileUploader.single("resume"), async (req, res, next) => {
   if (req.file) {
     newApplication.resume = req.file.path;
   }
+  newApplication.user = req.session.currentUser.id; // Fait la jointure
   try {
     const createdApplication = await ApplicationModel.create(newApplication);
     res.status(201).json(createdApplication);
