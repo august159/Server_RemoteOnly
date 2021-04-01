@@ -100,15 +100,15 @@ router.patch(
   ]),
   async (req, res, next) => {
     const UserToUpdate = { ...req.body };
-    if (req.files.avatar) {
-      UserToUpdate.avatar = req.files.avatar[0].path;
-    } else {
-      UserToUpdate.avatar =
-        "https://res.cloudinary.com/ago59/image/upload/v1616755182/remote-only/default-avatar-profile-icon-vector-social-media-user-portrait-176256935_tugyui.jpg";
-    }
-    if (req.files.resume) {
-      UserToUpdate.resume = req.files.resume[0].path;
-    }
+    // if (req.files.avatar) {
+    //   UserToUpdate.avatar = req.files.avatar[0].path;
+    // } else {
+    //   UserToUpdate.avatar =
+    //     "https://res.cloudinary.com/ago59/image/upload/v1616755182/remote-only/default-avatar-profile-icon-vector-social-media-user-portrait-176256935_tugyui.jpg";
+    // }
+    // if (req.files.resume) {
+    //   UserToUpdate.resume = req.files.resume[0].path;
+    // }
     try {
       console.log(`UserToUpdate`, UserToUpdate);
       const updatedUser = await UserModel.findByIdAndUpdate(
