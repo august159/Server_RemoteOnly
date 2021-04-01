@@ -21,7 +21,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   const offerId = req.params.id;
   try {
-    const searchedOffer = await OfferModel.findById(offerId);
+    const searchedOffer = await OfferModel.findById(offerId).populate("company");
     const applications = await ApplicationModel.find({ offer: offerId });
     res.status(200).json({ searchedOffer, applications });
   } catch (error) {
