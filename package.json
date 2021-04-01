@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon ./bin/www",
+    "dev": "nodemon -L ./bin/www",
     "start": "node ./bin/www",
     "seed": "node bin/seeds/seed.candidate.js; node bin/seeds/seed.application.js; node bin/seeds/seed.recruiter.js; node bin/seeds/seed.company.js; node bin/seeds/seed.offer.js; node bin/seeds/seed.relation.js",
     "build-react": "echo ---- creating react build --- && cd ../Client_RemoteOnly  && npm install && npm run build && cp -r ./build/* ../Server_RemoteOnly/public/ && cd .."
