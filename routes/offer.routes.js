@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const OfferModel = require("./../models/Offer");
 const ApplicationModel = require("./../models/Application");
+const UserModel = require("./../models/User");
 const protectRecruiterRoute = require("./../middlewares/protectRecruiterRoute");
 
 //* Get all job offers
@@ -47,13 +48,18 @@ router.patch("/:id", protectRecruiterRoute, async (req, res, next) => {
 
 //* Create an offer
 // TODO: limit the creation to a company's recruiter
-router.post("/", protectRecruiterRoute, (req, res, next) => {
-  const offer = { ...req.body }; //! Company.id need to be passed from the front end in the req body
+router.post("/", protectRecruiterRoute, async (req, res, next) => {
+  const offer = { ...req.body };
+  const recruiterId = req.session.currentUser.id; // Add the companyId to the offer based on the currentUser
+  const searchedRecruiter = await UserModel.findById(recruiterId);
+  const companyId = searchedRecruiter.companies[0];
+  offer.company = companyId;
+  console.log(`offer`, offer);
   OfferModel.create(offer)
     .then((offer) => {
       res.status(200).json(offer);
     })
-    .catch((err) => next(err));
+    .catch((error) => next(error));
 });
 
 //* Delete an offer
