@@ -35,7 +35,6 @@ const CompanyModel = require("../../models/Company");
     updateApplications();
 
     //* Link companies into recruiters
-    console.log("5");
     async function linkCompaniesRecruiter() {
       //! Always use for...of (sequence) or Promise.all (parallel) with promise & not forEach
       for (let company of allCompanies) {
@@ -45,7 +44,6 @@ const CompanyModel = require("../../models/Company");
             { $addToSet: { companies: [company._id] } }, //addToSet is equivalent to push but checks if the value exists in the db before
             { new: true }
           );
-          console.log("5.1");
         }
       }
     }
