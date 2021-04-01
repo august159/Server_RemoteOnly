@@ -3,7 +3,11 @@ const { Schema, model } = mongoose;
 
 const companySchema = new Schema({
   name: { type: String, required: true },
-  logo: String,
+  logo: {
+    type: String,
+    default:
+      "https://res.cloudinary.com/ago59/image/upload/v1616772836/remote-only/defaultcompany_logo_a3hjlz.jpg",
+  },
   city: String,
   website: { type: String, required: true },
   industry: String,

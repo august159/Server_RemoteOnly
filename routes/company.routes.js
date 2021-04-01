@@ -35,9 +35,6 @@ router.post("/", fileUploader.single("logo"), async (req, res, next) => {
   // Import logo if there is one
   if (req.file) {
     newCompany.logo = req.file.path;
-  } else {
-    newCompany.logo =
-      "https://res.cloudinary.com/ago59/image/upload/v1616772836/remote-only/defaultcompany_logo_a3hjlz.jpg";
   }
 
   // Add the recruiter id to the company
