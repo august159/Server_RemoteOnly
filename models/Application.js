@@ -6,7 +6,7 @@ const applicationSchema = new Schema(
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true },
-    phone: String,
+    phone: { type: String, required: true },
     resume: String,
     linkedIn: String,
     gitHub: String,
