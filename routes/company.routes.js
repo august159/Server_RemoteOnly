@@ -35,20 +35,22 @@ router.post("/", fileUploader.single("logo"), async (req, res, next) => {
   // Import logo if there is one
   if (req.file) {
     newCompany.logo = req.file.path;
-  } else {
-    newCompany.logo =
-      "https://res.cloudinary.com/ago59/image/upload/v1616772836/remote-only/defaultcompany_logo_a3hjlz.jpg";
   }
 
   // Add the recruiter id to the company
-  // if (req.session.currentUser.role === "recruiter") {
-  //   newCompany.users.push(req.session.currentUser.id);
-  // }
+  if (req.session.currentUser.role === "recruiter") {
+    if (!newCompany.users) {
+      newCompany.users = [];
+    }
+    newCompany.users.push(req.session.currentUser.id);
+  }
 
   try {
     const createdCompany = await CompanyModel.create(newCompany);
-    console.log(createdCompany);
     res.status(201).json(createdCompany);
+    // Insert the company id back into the current user data
+    const userToUpdate = await UserModel.findById(req.session.currentUser.id);
+    userToUpdate.companies.push(createdCompany._id);
   } catch (error) {
     res.status(500).send(error);
   }

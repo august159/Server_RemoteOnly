@@ -21,7 +21,9 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   const offerId = req.params.id;
   try {
-    const searchedOffer = await OfferModel.findById(offerId).populate("company");
+    const searchedOffer = await OfferModel.findById(offerId).populate(
+      "company"
+    );
     const applications = await ApplicationModel.find({ offer: offerId });
     res.status(200).json({ searchedOffer, applications });
   } catch (error) {
@@ -59,7 +61,10 @@ router.post("/", protectRecruiterRoute, async (req, res, next) => {
     .then((offer) => {
       res.status(200).json(offer);
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      console.log(`error`, error);
+      next(error);
+    });
 });
 
 //* Delete an offer

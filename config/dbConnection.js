@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 // }
 
 mongoose
-  .connect("mongodb://localhost/remote_only", {
+  .connect(process.env.MONGODB_URI, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
