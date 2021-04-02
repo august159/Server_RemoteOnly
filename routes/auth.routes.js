@@ -12,7 +12,7 @@ router.post("/signin", (req, res, next) => {
   UserModel.findOne({ email })
     .then((userDocument) => {
       if (!userDocument) {
-        return res.status(400).json({ message: "Invalid credentials" });
+        return res.status(400).json({ message: "Email/mot de passe invalide" });
       }
 
       const isValidPassword = bcrypt.compareSync(
@@ -20,7 +20,7 @@ router.post("/signin", (req, res, next) => {
         userDocument.password
       );
       if (!isValidPassword) {
-        return res.status(400).json({ message: "Invalid credentials" });
+        return res.status(400).json({ message: "Email/mot de passe invalide" });
       }
 
       req.session.currentUser = {
@@ -45,7 +45,7 @@ router.post(
     UserModel.findOne({ email })
       .then((userDocument) => {
         if (userDocument) {
-          return res.status(400).json({ message: "Email already taken" });
+          return res.status(400).json({ message: "Email déja pris" });
         }
 
         const hashedPassword = bcrypt.hashSync(password, salt);
@@ -93,7 +93,7 @@ router.get("/isLoggedIn", protectRoute, (req, res, next) => {
 router.get("/logout", protectRoute, (req, res, next) => {
   req.session.destroy(function (error) {
     if (error) next(error);
-    else res.status(200).json({ message: "Succesfully disconnected." });
+    else res.status(200).json({ message: "Déconnexion réussie." });
   });
 });
 

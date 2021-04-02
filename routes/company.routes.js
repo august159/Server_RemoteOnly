@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const CompanyModel = require("./../models/Company"); //Path to CompanyModel
 const OfferModel = require("./../models/Offer");
+const UserModel = require("./../models/User");
 const fileUploader = require("./../config/cloudinary");
 const protectRecruiterRoute = require("./../middlewares/protectRecruiterRoute");
 
@@ -45,15 +46,18 @@ router.post("/", fileUploader.single("logo"), async (req, res, next) => {
     newCompany.users.push(req.session.currentUser.id);
   }
 
-  try {
-    const createdCompany = await CompanyModel.create(newCompany);
-    res.status(201).json(createdCompany);
-    // Insert the company id back into the current user data
-    const userToUpdate = await UserModel.findById(req.session.currentUser.id);
-    userToUpdate.companies.push(createdCompany._id);
-  } catch (error) {
-    res.status(500).send(error);
-  }
+  // try {
+  // Insert the company id back into the current user data
+  const userToUpdate = await UserModel.findById(req.session.currentUser.id);
+  console.log(`userToUpdate.companies`, userToUpdate.companies);
+  const createdCompany = await CompanyModel.create(newCompany);
+  console.log(`createdCompany._id`, createdCompany._id);
+  const comp = userToUpdate.companies.push(createdCompany._id);
+  console.log(`comp`, comp);
+  res.status(201).json(createdCompany);
+  // } catch (error) {
+  //   res.status(500).send(error);
+  // }
 });
 
 //* Patch: update a company
