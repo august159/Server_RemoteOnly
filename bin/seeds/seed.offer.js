@@ -78,7 +78,7 @@ const offers = [
   {
     title: "Product Manager",
     salary: "60000",
-    contractType: "Produit",
+    contractType: "CDI",
     fieldWork: "Sales et Marketing",
     jobDescription:
       "Votre rôle 💡 En tant que stagiaire en marketing produit, vous jouerez un rôle clé en soutenant l'équipe mondiale de marketing produit dans ses tâches quotidiennes. Vous serez directement rattaché à l'un des responsables du marketing produit basé à Paris, en France. C'est l'occasion pour vous d'avoir un impact important dans une startup en pleine croissance qui se développe rapidement en France, au Royaume-Uni, en Allemagne, en Espagne et en Italie. Vous serez amené à interagir avec les équipes suivantes : Ventes, Marketing, Produit, Succès Client. Vos premières missions ⭐ - Market & Competitive Intelligence : Aider à synthétiser les informations provenant de sources multiples pour avoir une bonne compréhension de la dynamique du marché, des acheteurs et des concurrents dans les pays où nous opérons. - Lancements de produits : Travaillez avec une équipe interfonctionnelle de chefs de produit, de maîtres JetLang, de scientifiques des données, d'ingénieurs, de spécialistes du marketing et de vendeurs pour construire et lancer des produits dans tous les pays - de la validation initiale du marché, du positionnement et du message, à la stratégie de mise sur le marché, à l'exécution du lancement et au débriefing du lancement. - Mise en œuvre sur le terrain : Produire des supports efficaces pour le terrain, notamment des démonstrations de vente, des fiches techniques, des études de cas, des formations et des FAQ, afin de faciliter la compréhension des offres de produits, des acheteurs et du positionnement clé. - Évangélisation du produit : Soyez un évangéliste pour les produits PayFit. Mettez en avant leur valeur à la fois en interne (keynotes) et en externe (site web). - Gestion de la communauté des utilisateurs : Aidez à rapprocher notre équipe produit des clients en gérant notre communauté PayFit.",
@@ -103,25 +103,11 @@ const offers = [
     startingDate: "2021-07-02",
     isActive: true,
   },
-  ,
+
   {
-    title: "Product Designer",
-    salary: "45000",
+    title: "Sales manager",
+    salary: "90000",
     contractType: "CDI",
-    fieldWork: "Produit",
-    jobDescription:
-      "En tant que Senior Product Designer chez Agicap, ton rôle sera de concevoir des fonctionnalités qui ont pour ambition de résoudre les problèmes de nos utilisateurs. En collaboration avec les équipes produit, tech et marketing, tu seras en charge de : Identifier les besoins utilisateurs et les corréler avec les objectifs business Améliorer l’expérience utilisateur sur les fonctionnalités déjà existantes Mener de la recherche utilisateur et conceptualiser des features user centric Concevoir des maquettes/prototypes et les tester Vérifier la qualité des fonctionnalités développées Collaborer sur le Design System de l’application Participer à l’amélioration continue de nos process et méthodolologie design et produit",
-    profileDescription:
-      "Tu auras un rôle clé dans la croissance d’AGICAP, reportant directement à notre Head of Design, Luc. Ce que nous recherchons : Tu as minimum 5 ans d’expérience, dont 3 ans en product design dans la tech Tu as au moins une expérience notable en SaaS Tu as idéalement une première expérience dans une tech B2B en forte croissance Tu as d’excellentes capacités de conception et de prototypage Tu sais mener de la recherche et du test utilisateur Tu fais preuve de rigueur rédactionnelle et méthodologique Tu sais découper un besoin en plusieurs fonctionnalités et réaliser des maquettes Tu maitrises des outils comme Figma, Framer, Protopie… Des connaissances sur les langages web seraient un plus Tu sais collaborer au sein d’une équipe multi-fonctionnelle et tu as l’envie de partager tes connaissances Tu es à l’aise sur les méthodes agiles Tu as un portfolio qui montre ton approche de conception centrée utilisateur et les résultats de tes différents travaux, l’équipe design n’attend plus que toi !",
-    recruitmentProcess:
-      "Entretien téléphonique de motivation avec Camille, Product Recruiter Entretien avec notre Head of Design, Luc. Présentation d’un projet à l’équipe Product Design. Entretien avec Mael, CPO. Entretien avec Sébastien, notre CEO.",
-    startingDate: "2021-06-01",
-    isActive: true,
-  },
-  {
-    title: "Product Manager",
-    salary: "60000",
-    contractType: "Produit",
     fieldWork: "Sales et Marketing",
     jobDescription:
       "Votre rôle 💡 En tant que stagiaire en marketing produit, vous jouerez un rôle clé en soutenant l'équipe mondiale de marketing produit dans ses tâches quotidiennes. Vous serez directement rattaché à l'un des responsables du marketing produit basé à Paris, en France. C'est l'occasion pour vous d'avoir un impact important dans une startup en pleine croissance qui se développe rapidement en France, au Royaume-Uni, en Allemagne, en Espagne et en Italie. Vous serez amené à interagir avec les équipes suivantes : Ventes, Marketing, Produit, Succès Client. Vos premières missions ⭐ - Market & Competitive Intelligence : Aider à synthétiser les informations provenant de sources multiples pour avoir une bonne compréhension de la dynamique du marché, des acheteurs et des concurrents dans les pays où nous opérons. - Lancements de produits : Travaillez avec une équipe interfonctionnelle de chefs de produit, de maîtres JetLang, de scientifiques des données, d'ingénieurs, de spécialistes du marketing et de vendeurs pour construire et lancer des produits dans tous les pays - de la validation initiale du marché, du positionnement et du message, à la stratégie de mise sur le marché, à l'exécution du lancement et au débriefing du lancement. - Mise en œuvre sur le terrain : Produire des supports efficaces pour le terrain, notamment des démonstrations de vente, des fiches techniques, des études de cas, des formations et des FAQ, afin de faciliter la compréhension des offres de produits, des acheteurs et du positionnement clé. - Évangélisation du produit : Soyez un évangéliste pour les produits PayFit. Mettez en avant leur valeur à la fois en interne (keynotes) et en externe (site web). - Gestion de la communauté des utilisateurs : Aidez à rapprocher notre équipe produit des clients en gérant notre communauté PayFit.",
@@ -132,20 +118,7 @@ const offers = [
     startingDate: "2021-05-12",
     isActive: true,
   },
-  {
-    title: "Back-end Developer",
-    salary: "75000",
-    contractType: "CDI",
-    fieldWork: "Tech",
-    jobDescription:
-      "Sous la responsabilité de notre CPO, tu seras le lead d’une squad fonctionnelle de 7 personnes (1 Product Manager, 1 Product Designer, 5 Tech) et auras pour mission de : • Recueillir, trier et analyser les besoins métiers • Participer à la définition des objectifs trimestriels business et produit pour ta squad (en lien avec le CEO, CPO et CTO) • Elaborer la roadmap produit de ta squad • Définir, prioriser et rédiger les tâches nécessaires à l’éxecution de ta roadmap • Communiquer et expliquer les nouvelles tâches à l’équipe Tech • Définir et executer le plan de communucation et de formation interne et externe pour ta roadmap (en lien avec notre Product Marketing Manager) • Définir et tracker les KPIs liés à ta squad et aux fonctionnalités développées (en lien avec notre Data Engineer) • Vérifier la qualité des nouvelles fonctionnalités et identifier les bugs • Participer à la construction de l’équipe",
-    profileDescription:
-      "Tu auras un rôle clé dans la croissance AGICAP, reportant directement à notre CPO Maël. Ce que nous recherchons : • Tu as au moins 3 ans d’expérience en tant que PM • Tu as une première expérience en SaaS B2B et en startup en forte croissance • Tu es orienté client, problème et impact • Tu es un excellent communicant et tu es capable d’embarquer une entreprise entière derrière ta vision • Tu as déjà travaillé avec des équipes design et tech • Tu as un esprit logique et une capacité de synthèse • Tu as d’excellentes capacités de conception • Tu fais preuve de rigueur rédactionnelle et méthodologique • Tu sais partir d’un besoin utilisateur et le découper en plusieurs fonctionnalités • Tu es ambitieux(se) et l’esprit startup t’attire • Tu as l’esprit d’équipe et l’envie de partager tes connaissances",
-    recruitmentProcess:
-      "Entretien Produit avec un PM - Etude de cas - Entretien avec notre CPO - Entretien avec notre CEO",
-    startingDate: "2021-04-12",
-    isActive: true,
-  },
+
   {
     title: "Data scientist ",
     salary: "56000",
@@ -207,6 +180,15 @@ const offers = [
       CompanyModel.findOne({ name: "Dataiku" }),
       CompanyModel.findOne({ name: "Payfit" }),
       CompanyModel.findOne({ name: "October" }),
+      CompanyModel.findOne({ name: "Agicap" }),
+      CompanyModel.findOne({ name: "Agicap" }),
+      CompanyModel.findOne({ name: "Payfit" }),
+      CompanyModel.findOne({ name: "Agicap" }),
+      CompanyModel.findOne({ name: "Payfit" }),
+      CompanyModel.findOne({ name: "BlaBlaCar" }),
+      CompanyModel.findOne({ name: "Dataiku" }),
+      CompanyModel.findOne({ name: "Frichti" }),
+      CompanyModel.findOne({ name: "Frichti" }),
     ]);
 
     for (let i = 0; i < companies.length; i++) {
